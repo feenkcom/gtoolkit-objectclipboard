@@ -10,5 +10,5 @@ Object >> gtActionCopyObjectInspectFor: anAction [
 		tooltip: 'Copy object reference';
 		menuItemGroup: BrMenuItemGroupConfiguration editing;
 		action: [ :aButton |
-			Clipboard clipboardText: (GtObjectStorage default addNewObject: self) ]
+			Clipboard clipboardText: (GtObjectClipboard default addNewObject: self) ]
 ]
