@@ -73,6 +73,16 @@ GtObjectStorage >> generateNewUUID [
 	^ UUID new
 ]
 
+{ #category : 'gt - actions' }
+GtObjectStorage >> gtActionClearFor: anAction [
+	<gtAction>
+	^ anAction button
+		priority: 10;
+		icon: BrGlamorousVectorIcons bin;
+		tooltip: 'Clear storage';
+		action: [ :aButton | self clearCache ]
+]
+
 { #category : 'gt - views' }
 GtObjectStorage >> gtObjectsByUUIDFor: aView [
 	<gtView>

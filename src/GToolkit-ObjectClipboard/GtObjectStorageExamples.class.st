@@ -185,6 +185,30 @@ GtObjectStorageExamples >> baselineIncludesObjectClipboard [
 	^ project
 ]
 
+{ #category : 'examples - actions' }
+GtObjectStorageExamples >> clearStorageAction [
+	<gtExample>
+	<return: #GtObjectStorage>
+	| storage action announcements |
+	storage := self namedObject.
+	storage addNewObject: Object new.
+	announcements := OrderedCollection new.
+	storage announcer when: GtObjectStorageContentChangeAnnouncement
+		do: [ :each | announcements add: each ] for: announcements.
+	action := storage gtActionClearFor: GtPhlowAction new.
+	self assert: storage objectCount equals: 2.
+	self assert: announcements isEmpty.
+	action performActionOn: nil.
+	self assert: storage objectCount equals: 0.
+	self assert: storage names isEmpty.
+	self deny: storage hasLastObject.
+	self assert: announcements size equals: 1.
+	self assert: announcements first objectStorage identicalTo: storage.
+	action performActionOn: nil.
+	self assert: storage objectCount equals: 0.
+	^ storage
+]
+
 { #category : 'examples' }
 GtObjectStorageExamples >> clearStorageRemovesObjects [
 	<gtExample>
