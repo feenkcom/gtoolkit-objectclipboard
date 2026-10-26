@@ -1,7 +1,7 @@
 "
-Stores live objects under generated UUIDs using GtStoredClipboardObject entries in an OrderedDictionary. Each entry holds its ID, live value, and one optional name. Name lookup scans entries; there is no secondary name dictionary. Names are case-sensitive nonempty strings. Use the storage naming interface to enforce uniqueness and announce changes. Assigning a new name replaces the entry's previous name; assigning another entry's name is rejected. Name changes and reads do not affect insertion order.
+Stores live objects under generated UUIDs using GtStoredClipboardObject entries in an OrderedDictionary. Each entry holds its ID, live value, and one optional name. Name lookup scans entries; there is no secondary name dictionary. Names are case-sensitive nonempty strings. Use the clipboard naming interface to enforce uniqueness and announce changes. Assigning a new name replaces the entry's previous name; assigning another entry's name is rejected. Name changes and reads do not affect insertion order.
 
-Every insertion creates a fresh entry. lastObject returns the last remaining entry's value. Removing it exposes the preceding entry. lastObject signals NotFound for empty storage; lastObjectIfAbsent: and hasLastObject distinguish empty storage from a stored nil. Removing an entry also removes it from name lookup. clearCache resets entries.
+Every insertion creates a fresh entry. lastObject returns the last remaining entry's value. Removing it exposes the preceding entry. lastObject signals NotFound for empty clipboard; lastObjectIfAbsent: and hasLastObject distinguish empty clipboard from a stored nil. Removing an entry also removes it from name lookup. clearCache resets entries.
 
 Announces changes using GtObjectClipboardContentChangeAnnouncement and its GtObjectClipboardObjectAddedAnnouncement subclass.
 "
@@ -22,7 +22,7 @@ Class {
 
 { #category : 'accessing' }
 GtObjectClipboard class >> default [
-	"The image-wide storage used by the inspector's Copy object action."
+	"The image-wide object clipboard used by the inspector's Copy object action."
 	^ default ifNil: [ default := self new ]
 ]
 
@@ -39,7 +39,6 @@ GtObjectClipboard >> addNewObject: anObject [
 
 { #category : 'adding' }
 GtObjectClipboard >> addNewObject: anObject named: aName [
-	"Create a named entry and return its external ID. Validate before changing storage; announce the fully named entry."
 	| newUUID storedObject |
 	self validateName: aName.
 	(self includesName: aName) ifTrue: [ self error: 'Object name already exists' ].
@@ -79,14 +78,13 @@ GtObjectClipboard >> gtActionClearFor: anAction [
 	^ anAction button
 		priority: 10;
 		icon: BrGlamorousVectorIcons bin;
-		tooltip: 'Clear storage';
+		tooltip: 'Clear object clipboard';
 		action: [ :aButton | self clearCache ]
 ]
 
 { #category : 'gt - views' }
 GtObjectClipboard >> gtObjectsByUUIDFor: aView [
 	<gtView>
-	"Browse live objects by ID, refreshing when storage contents change."
 	objectsByUUID ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Objects by UUID';

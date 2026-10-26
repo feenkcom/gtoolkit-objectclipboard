@@ -1,5 +1,5 @@
 "
-An entry in GtObjectClipboard, pairing a generated UUID with the original live value and an optional name (nil when unnamed). Use the storage naming interface to coordinate uniqueness and announce changes. Name strings are copied on assignment and access.
+An entry in GtObjectClipboard, pairing a generated UUID with the original live value and an optional name (nil when unnamed). Use the clipboard naming interface to coordinate uniqueness and announce changes. Name strings are copied on assignment and access.
 "
 Class {
 	#name : 'GtStoredClipboardObject',
@@ -42,7 +42,7 @@ GtStoredClipboardObject >> name [
 
 { #category : 'accessing' }
 GtStoredClipboardObject >> name: aName [
-	"Storage coordinates uniqueness; nil removes the optional name."
+	"The clipboard coordinates uniqueness; nil removes the optional name."
 	(aName isNil or: [ aName isString and: [ aName isNotEmpty ] ])
 		ifFalse: [ self error: 'An object name must be a nonempty string or nil' ].
 	name := aName ifNotNil: [ aName copy ].

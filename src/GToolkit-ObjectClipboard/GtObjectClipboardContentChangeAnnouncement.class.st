@@ -1,5 +1,5 @@
 "
-Announces changes to a GtObjectClipboard. Carries the storage whose contents changed.
+Announces changes to a GtObjectClipboard. Carries the clipboard whose contents changed.
 "
 Class {
 	#name : 'GtObjectClipboardContentChangeAnnouncement',

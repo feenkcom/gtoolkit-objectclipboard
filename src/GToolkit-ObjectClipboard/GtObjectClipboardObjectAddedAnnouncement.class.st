@@ -1,5 +1,5 @@
 "
-Announces a newly inserted GtObjectClipboard entry. Carries the storage and the stored entry.
+Announces a newly inserted GtObjectClipboard entry. Carries the clipboard and the stored entry.
 "
 Class {
 	#name : 'GtObjectClipboardObjectAddedAnnouncement',
